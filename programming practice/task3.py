@@ -131,3 +131,47 @@ def check_table_length(table, expected_length):
     """Check if table length is as expected."""
     if len(table['data']) != expected_length:
         raise ValueError('Invalid table length.')
+
+# Создаем простую таблицу
+simple_table = {'attributes': {'delimiter': ','}, 'data': [
+    ['Name', 'Age', 'City'],
+    ['Alice', 25, 'New York'],
+    ['Bob', 30, 'Los Angeles'],
+    ['Charlie', 22, 'Chicago']
+]}
+
+# Сохраняем таблицу в CSV-файл
+save_table_to_file(simple_table, 'simple_table.csv')
+
+# Загружаем таблицу из CSV-файла
+loaded_table = load_table_from_file('simple_table.csv')
+
+# Выводим загруженную таблицу
+print("Loaded Table:")
+print_table(loaded_table)
+
+# Получаем и выводим первую строку
+row1 = get_rows_by_number(loaded_table, 0)
+print("\nFirst Row:")
+print_table(row1)
+
+# Получаем и выводим строки с именами Alice и Charlie
+selected_rows = get_rows_by_index(loaded_table, 'Alice', 'Charlie')
+print("\nSelected Rows:")
+print_table(selected_rows)
+
+# Получаем и выводим типы столбцов
+column_types = get_column_types(loaded_table, by_number=False)
+print("\nColumn Types:")
+for column, column_type in column_types.items():
+    print(f"{column}: {column_type}")
+
+# Устанавливаем новые значения в столбце 'Age'
+new_age_values = [26, 31, 23, 28]
+set_values(loaded_table, new_age_values, column=1)
+
+
+# Выводим обновленную таблицу
+print("\nUpdated Table:")
+print_table(loaded_table)
+
